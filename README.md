@@ -24,17 +24,19 @@ My personal feeling is that - while I understand the attraction of a central dep
 store - dependencies should be bundled with the code that depends on them (links can go
 dead and sometimes locating dependencies can be a trial).
 
-I will use the `main.go` file from my [ui](http://github.com/mramshaw/ui) repo fro testing.
+I will use the `main.go` file from my [UI repo](http://github.com/mramshaw/ui) for testing.
+
+[The dependencies for this are tricky so it is a good initial test.]
 
 ## To Install
 
-The command to run:
+The command to run to install `vgo`:
 
     $ go get -u golang.org/x/vgo
 
 ## To Use
 
-The command to run:
+The command to run to build the project:
 
     $ vgo build
 
@@ -52,9 +54,30 @@ And everything works as expected. Huzzah!
 
 The build generates `go.mod` and `go.sum` files. These should be checked into the Git repo.
 
+Or perhaps not ... Dave Cheney has some interesting things to say:
+
+    http://dave.cheney.net/2018/07/14/taking-go-modules-for-a-spin
+
+And:
+
+    http://dave.cheney.net/2018/07/16/using-go-modules-with-travis-ci
+
+## Updating Dependencies
+
+Interestingly, `vgo` uses a fairly conservative approach to dependencies. It uses the lowest
+possible version number - as opposed to the ___latest___ version number.
+
+To list the current modules:
+
+    $ vgo list -m
+
+To update the current modules:
+
+    $ vgo list -m -u
+
 ## Dependency Scanning
 
-My initial motivation for this repo was to try out Snyk's velneraability scanning. However,
+My initial motivation for this repo was to try out Snyk's vulnerability scanning. However,
 as of this writing (September 2018) Snyk does not yet support `vgo`:
 
     http://support.snyk.io/getting-started/languages-support
@@ -64,4 +87,6 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 ## To Do
 
 - [x] Install latest Golang (1.11 as of September 2018)
-- [ ] verify dependency migration via `go mod -init`
+- [ ] Verify dependency migration via `go mod -init`
+- [ ] Investigate Dave Cheney's thoughts
+- [ ] More testing
