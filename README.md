@@ -8,6 +8,11 @@ Probably the place to start is with Russ Cox's blog:
 
     http://research.swtch.com/vgo-tour
 
+[UPDATE: `vgo` was released with Go 1.11 while Russ Cox's post refers to an earlier implementation.
+There are substantial differences, so Russ Cox's should only be read for an overview and
+not considered to be authoritative. As well, `vgo` does not seem to follow standard \*nix
+conventions for command-line tools (parhaps this will change in the future).]
+
 ## Rationale
 
 Dependency management in Golang has always been tricky. The original developers flagged
@@ -20,6 +25,17 @@ the following blog post is worth a read:
 
     http://codeengineered.com/blog/2018/golang-godep-to-vgo/
 
+> vgo was built when the Go lead at Google went off on his own to build a solution.
+
+Sam Boyer and the `dep` team do not sound happy either:
+
+    https://golang.github.io/dep/blog/2018/07/25/announce-v0.5.0.html
+
+> That means there's no choosing between "vgo/modules or dep." It'll be "vgo, or another language."
+
+As `dep` is still being actively maintained, I think if I was using `dep` I would stick
+with it until there is a compelling reason to switch to `vgo`.
+
 My personal feeling is that - while I understand the attraction of a central dependency
 store - dependencies should be bundled with the code that depends on them (links can go
 dead and sometimes locating dependencies can be a trial).
@@ -27,6 +43,10 @@ dead and sometimes locating dependencies can be a trial).
 I will use the `main.go` file from my [UI repo](http://github.com/mramshaw/ui) for testing.
 
 [The dependencies for this are tricky so it is a good initial test.]
+
+## Requirements
+
+* a recent version of Golang (preferably a released version such as 1.11 or greater)
 
 ## To Install
 
