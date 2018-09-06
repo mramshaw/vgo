@@ -9,9 +9,9 @@ Probably the place to start is with Russ Cox's blog:
     http://research.swtch.com/vgo-tour
 
 [UPDATE: `vgo` was released with Go 1.11 while Russ Cox's post refers to an earlier implementation.
-There are substantial differences, so Russ Cox's should only be read for an overview and
-not considered to be authoritative. As well, `vgo` does not seem to follow standard \*nix
-conventions for command-line tools (parhaps this will change in the future).]
+There are substantial differences, so Russ Cox's blog should only be read for an overview
+and not considered to be authoritative. As well, `vgo` does not seem to follow standard \*nix
+conventions for command-line tools (perhaps this will change in the future).]
 
 ## Rationale
 
@@ -34,11 +34,15 @@ Sam Boyer and the `dep` team do not sound happy either:
 > That means there's no choosing between "vgo/modules or dep." It'll be "vgo, or another language."
 
 As `dep` is still being actively maintained, I think if I was using `dep` I would stick
-with it until there is a compelling reason to switch to `vgo`.
+with it until there was a compelling reason to switch to `vgo`.
 
 My personal feeling is that - while I understand the attraction of a central dependency
 store - dependencies should be bundled with the code that depends on them (links can go
-dead and sometimes locating dependencies can be a trial).
+dead and sometimes locating dependencies can be a trial). So I am not a fan of caching
+downloaded modules centrally - or even caching build results centrally. I like to be
+in control and am not a fan of having to locate hidden caches just so that I can nuke
+them in order to get a 'clean' build. I would prefer that this should be under developer
+control - and more transparent.
 
 I will use the `main.go` file from my [UI repo](http://github.com/mramshaw/ui) for testing.
 
@@ -102,7 +106,7 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 
     http://support.snyk.io/getting-started/languages-support
 
-[It does support `Gopkg.lock` scanning however.]
+[It does support `dep` via `Gopkg.lock` scanning however.]
 
 ## To Do
 
