@@ -86,6 +86,11 @@ And:
 
     http://dave.cheney.net/2018/07/16/using-go-modules-with-travis-ci
 
+[This last post is pretty interesting as it focuses on Travis integration. By default
+Go will continue to use pre-1.11 build behaviour unless `GO111MODULE=on` is specified.
+So it seems that modules are a build-breaking issue (I wonder how this squares with the
+[Go 1 Compatibility idea](https://golang.org/doc/go1compat)?]
+
 ## Updating Dependencies
 
 Interestingly, `vgo` uses a fairly conservative approach to dependencies. It uses the lowest
