@@ -58,15 +58,19 @@ The command to run to install `vgo`:
 
     $ go get -u golang.org/x/vgo
 
+[UPDATE: `vgo` was the pre-release version - with 1.11 the new behaviour is activated
+ by specifying `GO111MODULE=on` prior to the `go` command - as can be seen below.
+ Presumably with later releases this will become the default option.]
+
 ## To Use
 
 The command to run to build the project:
 
-    $ vgo build
+    $ GO111MODULE=on go build
 
 This builds a binary called `vgo` (not really what we want), so:
 
-    $ vgo build -o greeting
+    $ GO111MODULE=on go build -o greeting
 
 We can execute this as follows:
 
@@ -98,11 +102,11 @@ possible version number - as opposed to the ___latest___ version number.
 
 To list the current modules:
 
-    $ vgo list -m
+    $ go list -m
 
 To update the current modules:
 
-    $ vgo list -m -u
+    $ go list -m -u
 
 ## Dependency Scanning
 
@@ -116,6 +120,7 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 ## To Do
 
 - [x] Install latest Golang (1.11 as of September 2018)
+- [x] Investigate the use of `GO111MODULE=on`
 - [ ] Verify dependency migration via `go mod -init`
 - [ ] Investigate Dave Cheney's thoughts
 - [ ] More testing
