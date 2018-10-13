@@ -157,6 +157,7 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 - [x] Install latest Golang (1.11 as of September 2018)
 - [x] Investigate the use of `GO111MODULE=on`
 - [x] Investigate the removal of `vgo` via `go clean`
+- [x] Investigate `vgo` dependency via the use of `GO111MODULE=on`
 - [ ] Verify dependency migration via `go mod -init`
 - [ ] Investigate Dave Cheney's thoughts
 - [ ] More testing
