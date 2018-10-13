@@ -62,6 +62,41 @@ The command to run to install `vgo`:
  by specifying `GO111MODULE=on` prior to the `go` command - as can be seen below.
  Presumably with later releases this will become the default option.]
 
+## To Remove
+
+As `vgo` is no longer required with Golang 1.11 (and later) it may be removed.
+
+The command to run to remove `vgo`:
+
+    $ go clean -i golang.org/x/vgo
+
+This will leave some cruft in the various Go build and test caches, which
+seems to be consistent with most of the other package managers (such as
+`npm` et al). In practice, the normal procedure seems to be to either delete
+the caches when disk space is needed or else to virtualize the build process
+(by using either `docker` or `vagrant`).
+
+For a dry run of the above command:
+
+    $ go clean -n -i golang.org/x/vgo
+
+As noted above, this will still leave some remaining cruft which may be cleaned
+up manually.
+
+UPDATE: It seems that specifying `GO111MODULE=on` installs `vgo` as a dependency,
+which feels like a bit of a bodge. Perhaps this will be eliminated with later
+versions of Go.
+
+Presumably the build and test caches can be cleaned out as follows:
+
+    $ go clean -cache -testcache -modcache
+
+[Add an `-x` option to see the remove commands as they are executed.]
+
+At least with `npm` it is possible to define build and runtime dependencies.
+
+It would be nice if `vgo` had this level of flexibility.
+
 ## To Use
 
 The command to run to build the project:
@@ -121,6 +156,7 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 
 - [x] Install latest Golang (1.11 as of September 2018)
 - [x] Investigate the use of `GO111MODULE=on`
+- [x] Investigate the removal of `vgo` via `go clean`
 - [ ] Verify dependency migration via `go mod -init`
 - [ ] Investigate Dave Cheney's thoughts
 - [ ] More testing
