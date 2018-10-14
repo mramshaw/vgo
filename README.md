@@ -44,6 +44,8 @@ in control and am not a fan of having to locate hidden caches just so that I can
 them in order to get a 'clean' build. I would prefer that this should be under developer
 control - and more transparent.
 
+[Probably this is a use case for `go mod vendor` although that is just a guess for now.]
+
 I will use the `main.go` file from my [UI repo](http://github.com/mramshaw/ui) for testing.
 
 [The dependencies for this are tricky so it is a good initial test.]
@@ -158,6 +160,8 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 - [x] Investigate the use of `GO111MODULE=on`
 - [x] Investigate the removal of `vgo` via `go clean`
 - [x] Investigate `vgo` dependency via the use of `GO111MODULE=on`
+- [ ] Investigate `go mod vendor` to deal with dependencies
+- [ ] Investigate `go mod tidy` to deal with dependencies
 - [ ] Verify dependency migration via `go mod -init`
 - [ ] Investigate Dave Cheney's thoughts
 - [ ] More testing
