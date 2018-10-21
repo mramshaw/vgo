@@ -13,6 +13,22 @@ There are substantial differences, so Russ Cox's blog should only be read for an
 and not considered to be authoritative. As well, `vgo` does not seem to follow standard \*nix
 conventions for command-line tools (perhaps this will change in the future).]
 
+## Contents
+
+- [Rationale](#rationale)
+- [Requirements](#requirements)
+- [To Install](#to-install)
+- [To Remove](#to-remove)
+- [To Use](#to-use)
+- [Git](#git)
+- [Caches](#caches)
+    - [Build cache](#build-cache)
+    - [Module cache](#module-cache)
+- [Dependencies](#dependencies)
+- [Updating Dependencies](#updating-dependencies)
+- [Dependency Scanning](#dependency-scanning)
+- [To Do](#to-do)
+
 ## Rationale
 
 Dependency management in Golang has always been tricky. The original developers flagged
@@ -132,6 +148,58 @@ Go will continue to use pre-1.11 build behaviour unless `GO111MODULE=on` is spec
 So it seems that modules are a build-breaking issue. I wonder how this squares with the
 [Go 1 Compatibility idea](https://golang.org/doc/go1compat)?]
 
+## Caches
+
+Dave Cheney's blog post has a useful note from Russ Cox about caches.
+
+Recent versions of Go have introduced caches, both of __test__ results and __build__ results.
+
+These probably correspond to the `-testcache` and `-cache` options for `go clean`.
+
+The new cache seems to correspond with the `-modcache` option for `go clean`.
+
+#### Build cache
+
+> The build cache ($GOCACHE, defaulting to $HOME/.cache/go-build) is for storing recent compilation results
+
+Lets have a look at it:
+
+```bash
+$ cat ~/.cache/go-build/README
+This directory holds cached build artifacts from the Go build system.
+Run "go clean -cache" if the directory is getting too large.
+See golang.org to learn more about Go.
+$
+```
+
+#### Module cache
+
+> The module cache ($GOPATH/src/mod, defaulting to $HOME/go/src/mod) is for storing downloaded source code
+
+This folder does not exist on my computer, I suspect it is actually the following:
+
+```bash
+$ ls -al ~/go/pkg/mod/cache
+total 16
+drwxrwxr-x 4 owner owner 4096 Oct 12 11:36 .
+drwxrwxr-x 6 owner owner 4096 Oct 13 15:48 ..
+drwxrwxr-x 5 owner owner 4096 Oct 13 15:48 download
+drwxrwxr-x 9 owner owner 4096 Oct 13 15:48 vcs
+$
+```
+
+## Dependencies
+
+The following command will create `go.mod` and `go.sum` files:
+
+    $ GO111MODULE=on go build -o greeting
+
+However, under some circumstances it may be necessary to specify the package:
+
+    $ GO111MODULE=on go mod init <pkg>
+
+[This will create `go.mod` file - the `go.sum` file will be created by a build.]
+
 ## Updating Dependencies
 
 Interestingly, `vgo` uses a fairly conservative approach to dependencies. It uses the lowest
@@ -163,5 +231,5 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 - [ ] Investigate `go mod vendor` to deal with dependencies
 - [ ] Investigate `go mod tidy` to deal with dependencies
 - [ ] Verify dependency migration via `go mod -init`
-- [ ] Investigate Dave Cheney's thoughts
+- [x] Investigate Dave Cheney's thoughts
 - [ ] More testing
