@@ -25,7 +25,8 @@ conventions for command-line tools (perhaps this will change in the future).]
     - [Build cache](#build-cache)
     - [Module cache](#module-cache)
 - [Dependencies](#dependencies)
-- [Updating Dependencies](#updating-dependencies)
+    - [Vendoring Dependencies](#vendoring-dependencies)
+    - [Updating Dependencies](#updating-dependencies)
 - [Dependency Scanning](#dependency-scanning)
 - [To Do](#to-do)
 
@@ -60,7 +61,8 @@ in control and am not a fan of having to locate hidden caches just so that I can
 them in order to get a 'clean' build. I would prefer that this should be under developer
 control - and more transparent.
 
-[Probably this is a use case for `go mod vendor` although that is just a guess for now.]
+[This is a use case for `go mod vendor`, see [Vendoring Dependencies](#vendoring-dependencies)
+ below for more details.]
 
 I will use the `main.go` file from my [UI repo](http://github.com/mramshaw/ui) for testing.
 
@@ -194,24 +196,53 @@ The following command will create `go.mod` and `go.sum` files:
 
     $ GO111MODULE=on go build -o greeting
 
-However, under some circumstances it may be necessary to specify the package:
+However, under some circumstances it may be necessary to first specify the package:
 
-    $ GO111MODULE=on go mod init <pkg>
+    $ go mod init github.com/mramshaw/vgo
 
-[This will create `go.mod` file - the `go.sum` file will be created by a build.]
+[This will create a `go.mod` file - the `go.sum` file will be created by a build.]
 
-## Updating Dependencies
+#### Vendoring Dependencies
+
+The `go mod vendor` command will populate the required dependencies.
+
+```bash
+$ go mod vendor
+go: finding github.com/andlabs/ui latest
+$
+```
+
+[It may be first necessary to specify the package (as above) via `go mod init`.]
+
+Some useful help:
+
+```bash
+$ go mod help vendor
+usage: go mod vendor [-v]
+
+Vendor resets the main module's vendor directory to include all packages
+needed to build and test all the main module's packages.
+It does not include test code for vendored packages.
+
+The -v flag causes vendor to print the names of vendored
+modules and packages to standard error.
+$
+```
+
+__Nota bene__: "It does not include test code for vendored packages."
+
+#### Updating Dependencies
 
 Interestingly, `vgo` uses a fairly conservative approach to dependencies. It uses the lowest
 possible version number - as opposed to the ___latest___ version number.
 
 To list the current modules:
 
-    $ go list -m
+    $ GO111MODULE=on go list -m
 
 To update the current modules:
 
-    $ go list -m -u
+    $ GO111MODULE=on go list -m -u
 
 ## Dependency Scanning
 
@@ -228,7 +259,7 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 - [x] Investigate the use of `GO111MODULE=on`
 - [x] Investigate the removal of `vgo` via `go clean`
 - [x] Investigate `vgo` dependency via the use of `GO111MODULE=on`
-- [ ] Investigate `go mod vendor` to deal with dependencies
+- [x] Investigate `go mod vendor` to deal with dependencies
 - [ ] Investigate `go mod tidy` to deal with dependencies
 - [ ] Verify dependency migration via `go mod -init`
 - [x] Investigate Dave Cheney's thoughts
