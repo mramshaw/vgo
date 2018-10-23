@@ -240,9 +240,31 @@ To list the current modules:
 
     $ GO111MODULE=on go list -m
 
-To update the current modules:
+To update (as in, check for more recent versions of) the current modules:
 
     $ GO111MODULE=on go list -m -u
+
+There is also `go mod tidy`:
+
+```bash
+$ go mod help tidy
+usage: go mod tidy [-v]
+
+Tidy makes sure go.mod matches the source code in the module.
+It adds any missing modules necessary to build the current module's
+packages and dependencies, and it removes unused modules that
+don't provide any relevant packages. It also adds any missing entries
+to go.sum and removes any unnecessary ones.
+
+The -v flag causes tidy to print information about removed modules
+to standard error.
+$
+```
+
+By default `go mod tidy` produces no output. It's worth noting that it will not clean up
+any vendored dependencies either (these must be deleted manually as `go mod vendor` does
+not have a removal option - the simplest option is to delete the `vendor` folder and then
+re-create it with `go mod vendor`).
 
 ## Dependency Scanning
 
@@ -260,7 +282,7 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 - [x] Investigate the removal of `vgo` via `go clean`
 - [x] Investigate `vgo` dependency via the use of `GO111MODULE=on`
 - [x] Investigate `go mod vendor` to deal with dependencies
-- [ ] Investigate `go mod tidy` to deal with dependencies
+- [x] Investigate `go mod tidy` to deal with dependencies
 - [ ] Verify dependency migration via `go mod -init`
 - [x] Investigate Dave Cheney's thoughts
 - [ ] More testing
