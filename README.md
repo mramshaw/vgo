@@ -2,7 +2,7 @@
 
 ![Go_Logo](/images/Go_Logo_Aqua.svg)
 
-Getting familiar with [vgo](http://github.com/cockroachdb/cockroach/), the latest Golang package manager.
+Getting familiar with [vgo](http://github.com/golang/vgo/), the latest Golang package manager.
 
 Probably the place to start is with Russ Cox's blog:
 
@@ -27,6 +27,7 @@ conventions for command-line tools (perhaps this will change in the future).]
 - [Dependencies](#dependencies)
     - [Vendoring Dependencies](#vendoring-dependencies)
     - [Updating Dependencies](#updating-dependencies)
+- [Travis CI](#travis-ci)
 - [Dependency Scanning](#dependency-scanning)
 - [To Do](#to-do)
 
@@ -266,6 +267,29 @@ any vendored dependencies either (these must be deleted manually as `go mod vend
 not have a removal option - the simplest option is to delete the `vendor` folder and then
 re-create it with `go mod vendor`).
 
+## Travis CI
+
+There are some great tips from Dave Cheney, my experience was that one of the following
+will be needed to get Travis to build properly:
+
+```
+script:
+  - env GO111MODULE=on go build
+  - env GO111MODULE=on go test
+```
+
+[Individual environment variables]
+
+Or else a global environment variable:
+
+```
+env:
+  global:
+  - GO111MODULE=on
+```
+
+[This last worked for me]
+
 ## Dependency Scanning
 
 My initial motivation for this repo was to try out Snyk's vulnerability scanning. However,
@@ -285,4 +309,5 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
 - [x] Investigate `go mod tidy` to deal with dependencies
 - [ ] Verify dependency migration via `go mod -init`
 - [x] Investigate Dave Cheney's thoughts
+- [x] Add notes on Travis CI integration
 - [ ] More testing
