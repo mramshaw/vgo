@@ -27,6 +27,12 @@ conventions for command-line tools (perhaps this will change in the future).]
 - [Dependencies](#dependencies)
     - [Vendoring Dependencies](#vendoring-dependencies)
     - [Updating Dependencies](#updating-dependencies)
+- [GO111MODULE](#go111module)
+- [My recommended workflow](#my-recommended-workflow)
+    - [Step 1](#step-1)
+    - [Step 2](#step-2)
+    - [Step 3](#step-3)
+- [go mod edit](#go-mod-edit)
 - [Travis CI](#travis-ci)
 - [Dependency Scanning](#dependency-scanning)
 - [To Do](#to-do)
@@ -266,6 +272,50 @@ By default `go mod tidy` produces no output. It's worth noting that it will not 
 any vendored dependencies either (these must be deleted manually as `go mod vendor` does
 not have a removal option - the simplest option is to delete the `vendor` folder and then
 re-create it with `go mod vendor`).
+
+## GO111MODULE
+
+It seems that the presence of a `go.mod` file implies `GO111MODULE=on` so that if
+[my recommended workflow](#my-recommended-workflow) is followed, there is no need
+to explicitly use `GO111MODULE=on`.
+
+## My recommended workflow
+
+This may evolve over time, but for the moment it is as follows:
+
+1. go mod init ...
+2. go mod vendor
+3. go build ...
+
+#### Step 1
+
+For step 1, best results will be had by specifying the fully-qualified package name, i.e.:
+
+    $ go mod init github.com/xxxx/yyyy
+
+instead of:
+
+    $ go mod init yyyy
+
+[This will result in a cleaner dependency graph.]
+
+#### Step 2
+
+This will vendor the dependencies in the local file system, instead of in a central cache.
+
+[This is *my* preference.]
+
+#### Step 3
+
+Step 3 could just as easily be `go run ...` or `go test ...` or `make` or whatever.
+
+## go mod edit
+
+At present (as of Go 1.11) it seems that `go mod edit ...` does not work as expected.
+
+A workaround is to use `sed` to edit the `go.mod` file instead.
+
+[Remember to re-run `go mod vendor` after editing the `go.mod` file.]
 
 ## Travis CI
 
