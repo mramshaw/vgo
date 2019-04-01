@@ -4,6 +4,9 @@
 
 Getting familiar with [vgo](http://github.com/golang/vgo/), the latest Golang package manager.
 
+[In the go community `vgo` is also known as [go modules](http://github.com/golang/go/wiki/Modules).
+ Older package managers include [dep](http://golang.github.io/dep/) and [glide](http://glide.sh).]
+
 Probably the place to start is with Russ Cox's blog:
 
     http://research.swtch.com/vgo-tour
@@ -35,6 +38,7 @@ conventions for command-line tools (perhaps this will change in the future).]
 - [go mod edit](#go-mod-edit)
 - [Travis CI](#travis-ci)
 - [Dependency Scanning](#dependency-scanning)
+- [Reference](#reference)
 - [To Do](#to-do)
 
 ## Rationale
@@ -348,6 +352,12 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
     http://support.snyk.io/getting-started/languages-support
 
 [It does support `dep` via `Gopkg.lock` scanning however.]
+
+## Reference
+
+Probably the best place to read up on `vgo` (also known as ___go modules___):
+
+    http://github.com/golang/go/wiki/Modules
 
 ## To Do
 
