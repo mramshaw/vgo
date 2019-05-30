@@ -283,12 +283,19 @@ It seems that the presence of a `go.mod` file implies `GO111MODULE=on` so that i
 [my recommended workflow](#my-recommended-workflow) is followed, there is no need
 to explicitly use `GO111MODULE=on`.
 
+UPDATE: With Go __1.12__ this defaults to __auto__, which means that it will be
+used if there is a __go.mod__ file available and will not be used if there isn't.
+
+__NOTA BENE:__ the __auto__ setting will prevent the use of modules in the $GOPATH/src directory.
+
+[This is fine by me but may affect ___your___ workflow.]
+
 ## My recommended workflow
 
 This may evolve over time, but for the moment it is as follows:
 
 1. go mod init ...
-2. go mod vendor
+2. go mod vendor -v
 3. go build ...
 
 #### Step 1
@@ -307,7 +314,7 @@ instead of:
 
 This will vendor the dependencies in the local file system, instead of in a central cache.
 
-[This is *my* preference.]
+[Which is ___my___ preference.]
 
 #### Step 3
 
@@ -349,9 +356,9 @@ env:
 My initial motivation for this repo was to try out Snyk's vulnerability scanning. However,
 as of this writing (September 2018) Snyk does not yet support `vgo`:
 
-    http://support.snyk.io/getting-started/languages-support
+    http://support.snyk.io/hc/en-us/articles/360000911957-Language-support
 
-[It does support `dep` via `Gopkg.lock` scanning however.]
+[Snyk does support `dep` via `Gopkg.lock` scanning however.]
 
 ## Reference
 
@@ -361,7 +368,7 @@ Probably the best place to read up on `vgo` (also known as ___go modules___):
 
 ## To Do
 
-- [x] Install latest Golang (1.11 as of September 2018)
+- [x] Install latest Golang (1.12 as of May 2019)
 - [x] Investigate the use of `GO111MODULE=on`
 - [x] Investigate the removal of `vgo` via `go clean`
 - [x] Investigate `vgo` dependency via the use of `GO111MODULE=on`
