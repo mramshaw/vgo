@@ -38,6 +38,7 @@ conventions for command-line tools (perhaps this will change in the future).]
 - [go mod edit](#go-mod-edit)
 - [Travis CI](#travis-ci)
 - [Dependency Scanning](#dependency-scanning)
+- [Cloud Functions](#cloud-functions)
 - [Reference](#reference)
 - [To Do](#to-do)
 
@@ -359,6 +360,20 @@ as of this writing (September 2018) Snyk does not yet support `vgo`:
     http://support.snyk.io/hc/en-us/articles/360000911957-Language-support
 
 [Snyk does support `dep` via `Gopkg.lock` scanning however.]
+
+## Cloud Functions
+
+Perhaps not surprisingly, Google's Cloud Functions support `vgo` for Go:
+
+    http://cloud.google.com/functions/docs/writing/specifying-dependencies-go
+
+The article recommends the following workflow:
+
+    export GO111MODULE=on
+    go mod init
+    go mod tidy
+
+[From the above page, assuming you are within the $GOPATH.]
 
 ## Reference
 
